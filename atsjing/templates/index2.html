@@ -1,0 +1,59 @@
+{% extends 'base2.html'%}
+
+
+{% block head %}
+{% endblock %}
+
+
+
+{% block body %}
+<div class="sidenav">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+</div>
+<p class="algotrade">Algorithmic Trading</p>
+<hr>
+<h3 style="margin-top: 40px;">EXAMPLE</h3>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<div class="containerexample">
+        <div id="chart1"></div>
+        <script>
+            var graphJSON1 = {{ graphJSON1| safe }};
+            Plotly.plot("chart1", graphJSON1.data, graphJSON1.layout);
+        </script>
+    
+    
+        <div id="chart2"></div>
+        <script>
+            var graphJSON2 = {{ graphJSON2| safe }};
+            Plotly.plot("chart2", graphJSON2.data, graphJSON2.layout);
+        </script>
+
+  
+        <div id="chart3"></div>
+        <script>
+            var graphJSON3 = {{ graphJSON3| safe }};
+            Plotly.plot("chart3", graphJSON3.data, graphJSON3.layout);
+        </script>
+  
+        <div id="chart4"></div>
+        <script>
+            var graphJSON4 = {{ graphJSON4| safe }};
+            Plotly.plot("chart4", graphJSON4.data, graphJSON4.layout);
+        </script>
+</div>
+<form action="/" method="POST">
+    <input type="text" name="stockname" id="stockname" style="width: 50px;">
+    <input type="submit" value="ADD STOCK" style="display: inline;">
+</form>
+<div class="containerexample">
+    <div id="chart5"></div>
+        <script>
+            var graphJSON5 = {{ graphJSON5| safe }};
+            Plotly.plot("chart5", graphJSON5.data, graphJSON5.layout);
+        </script>
+
+</div>
+    {% endblock %}

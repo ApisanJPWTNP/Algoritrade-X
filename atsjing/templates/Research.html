@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='dwd3.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="w3-top">
+        <div class="w3-bar w3-black w3-card w3-left-align w3-large">
+            <a href="{{ url_for('home') }}"><img class="w3-bar-item w3-button w3-padding-large " style="height: 100px;width:auto"
+                src="{{ url_for('static', filename='nsc_logo_dark_theme-PhotoRoom.png-PhotoRoom.png') }}"></a>
+          <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-blue" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+          <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white"style="height: 100px;width:auto;font-size:40px;align-items: center;">Research</a>
+          <a href="{{ url_for('trade') }}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"style="height: 100px;width:auto;font-size:40px;align-items: center;">Live Trade</a>
+          <a href="{{ url_for('tradee') }}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"style="height: 100px;width:auto;font-size:40px;align-items: center;">Portfolio</a>
+          <a href="{{ url_for('login') }}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"style="height: 100px;width:auto;font-size:40px;text-alignment:right;float: right;">Log Out</a>
+        </div>
+        </div> 
+    <hr>
+    
+    <div style="background-color:white; padding: 20px;margin-top: 50px;">
+        <h3 style="font-size: 40px;font-weight: bold;">Example</h3>
+
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <div class="containerexample">
+            <div style="text-align: left;">
+                <div id="chart1"></div>
+                <script>
+                    var graphJSON1 = {{ graphJSON1| safe }};
+                    Plotly.plot("chart1", graphJSON1.data, graphJSON1.layout);
+                </script>
+                <p style="font-weight: bold; margin-left:30px;font-size: 15px; color: {{colorbh1}};">Buy and Hold
+                    strategy : {{purebh1}} %</p>
+
+                
+                <p style=" font-weight: bold;margin-left:30px;font-size: 15px;color: {{colorret1}};">Algorithmic Trade :
+                    {{ret1}} %</p>
+            </div>
+
+            <div style="text-align: left;">
+                <div id="chart2"></div>
+                <script>
+                    var graphJSON2 = {{ graphJSON2| safe }};
+                    Plotly.plot("chart2", graphJSON2.data, graphJSON2.layout);
+                </script>
+                <p style="font-weight: bold; margin-left:30px;font-size: 15px;color: {{colorbh2}};">Buy and Hold
+                    strategy : {{purebh2}} %</p>
+
+
+                <p style=" font-weight: bold;margin-left:30px;font-size: 15px;color: {{colorret2}};">Algorithmic Trade :
+                    {{ret2}} %</p>
+            </div>
+
+            <div style="text-align: left;">
+                <div id="chart3"></div>
+                <script>
+                    var graphJSON3 = {{ graphJSON3| safe }};
+                    Plotly.plot("chart3", graphJSON3.data, graphJSON3.layout);
+                </script>
+                <p style="font-weight: bold; margin-left:30px;font-size: 15px;color: {{colorbh3}};">Buy and Hold
+                    strategy : {{purebh3}} %</p>
+
+
+                <p style=" font-weight: bold;margin-left:30px;font-size: 15px;color: {{colorret3}};">Algorithmic Trade :
+                    {{ret3}} %</p>
+            </div>
+            <div style="text-align: left;">
+                <div id="chart4"></div>
+                <script>
+                    var graphJSON4 = {{ graphJSON4| safe }};
+                    Plotly.plot("chart4", graphJSON4.data, graphJSON4.layout);
+                </script>
+                <p style="font-weight: bold; margin-left:30px;font-size: 15px;color: {{colorbh4}};">Buy and Hold
+                    strategy : {{purebh4}} %</p>
+
+
+                <p style=" font-weight: bold;margin-left:30px;font-size: 15px;color: {{colorret4}};">Algorithmic Trade :
+                    {{ret4}} %</p>
+            </div>
+        </div>
+    </div>
+    <div style="background-color: whitesmoke;padding: 20px;">
+        <div style=" margin-bottom: 30px;font-weight: bold;font-size: 40px;">Performance</div>
+        <div style="margin-top: 30px; margin-bottom: 30px;">
+            <p></p>
+            <div style="display: inline;margin-left: 30px;font-weight: bold;font-size: 30px;">Select Market</div>
+            <div style="display: inline;margin-left: 60px;font-weight: bold;font-size: 30px;">Stock Name</div>
+
+            <form action="" method="POST">
+                <select name="selectmarket" style="height:50px; width:200px;margin: 30px;  font-size: 30px;">
+                    <option value="NONE">NONE</option>
+                    <option value="THAI">THAI</option>
+                    <option value="US">US</option>
+                </select>
+                <input type="text" name="stockname" id="stockname"
+                    style="height:50px; width:400px;margin: 30px; margin-left: 0px; font-size: 30px;text-transform: uppercase;">
+                <input type="submit" value="ADD STOCK" style="display: inline;font-size: 30px;height:50px;">
+            </form>
+            <div style="margin-left: 30px;margin-bottom: 30px;font-size: 20px;">You have selected {{stockname}} in {{marketname}} market
+            </div>
+
+            <div style="display: flex;text-align: center;margin: auto;margin-left: 20px;">
+                <div id="chart5"></div>
+                <script>
+                    var graphJSON5 = {{ graphJSON5| safe }};
+                    Plotly.plot("chart5", graphJSON5.data, graphJSON5.layout);
+                </script>
+                <div style="text-align: left;margin-top: 60px;margin-left: 30px;">
+                    <p style="display: inline;font-weight: bold; color: {{colorbh}};font-size: 20px;">Buy and Hold strategy : {{purebh}}
+                        %
+                    </p>
+                    <br>
+                    <p></p>
+                    <p style="display: inline; font-weight: bold;color: {{colorret}};font-size: 20px;">Algorithmic Trade : {{ret}} %</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--div style="margin-top: 30px; margin-bottom: 30px;font-weight: bold;">Performance</div>
+    <div class="containerexample">
+        <div id="chart5"></div>
+        <script>
+            var graphJSON5 = {{ graphJSON5| safe }};
+            Plotly.plot("chart5", graphJSON5.data, graphJSON5.layout);
+        </script>
+        <div style="text-align: left;margin-top: 60px;margin-left: 30px;">
+            <p style="display: inline;font-weight: bold; color: {{colorbh}};">Buy and Hold strategy : {{purebh}} %</p>
+            <br>
+            <p></p>
+            <p style="display: inline; font-weight: bold;color: {{colorret}};">Algorithmic Trade : {{ret}} %</p>
+        </div>
+
+    </div-->
+
+</body>
+
+</html>
