@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='dwd2.css')}}">
+</head>
+<body>
+    <div class="sidenav">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+    </div>
+    <div style="margin: auto;">
+    <div class="login-form">
+        <p class="loginheader">LOGIN FORM</p>
+        <form action="/contact" method="POST">
+            <label for="user">Username:</label>
+            <input type="text" name="user" id="user" style="width: 100px; margin-bottom: 20px; ">
+            <br>
+            <label for="password">Password:</label>
+            <input type="text" name="password" id="password" style="width: 100px; margin-bottom: 20px;">
+            <br>
+            <input type="submit" name="submit"value="LOGIN" style="font: 30px black bold;" >
+        </form>
+        <p style="font-size: 20px;">Login status: {{statuslogin}}</p>
+        
+    </div></div>
+</body>
+</html>
