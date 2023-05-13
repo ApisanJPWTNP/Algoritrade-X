@@ -57,6 +57,17 @@
                 style="height: 100px;width:auto;font-size:40px;float: right;">Log Out</a>
         </div>
     </div>
+    <div style="padding: 40px;background-color: white;margin-left:10% ;margin-right:10% ;">
+    <div id="mini-chart-container" style="overflow: auto; white-space: nowrap;">
+    {% for item in optedlist %}
+        <div style="border-width: 1px;border-style: solid;border-color: black;">
+        <div style="font-size:30px;"> {{item[0]}}</div>
+        <div style="font-size:30px;">{{item[1]}}</div>
+    </div>
+    {% endfor %}
+    
+    
+    </div></div>
     <div style="padding: 40px;">
         <div style="color:black;margin-left:10% ;margin-bottom: 20px;font-weight:  bold;font-size:20px;margin-top:5%;">
             Symbol lookup</div>
@@ -77,60 +88,13 @@
                         style="font-size: 30px;height:50px;margin: 30px;"></div>
                 </form>
             </div>
-            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+            <!--script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <div id="chart6"></div>
                 <script>
                     var graphJSON6 = {{ graphJSON6| safe }};
                     Plotly.plot("chart6", graphJSON6.data, graphJSON6.layout);
-                </script>
-            <!--div class="box2" >
-                <div style="padding: 20px;">
-                    <div class="tradingview-widget-container">
-                        <div class="tradingview-widget-container__widget"></div>
-                        <div class="tradingview-widget-copyright"></div>
-                        <script type="text/javascript"
-                            src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
-                                {
-                                    "colorTheme": "dark",
-                                        "isTransparent": false,
-                                            "largeChartUrl": "",
-                                                "displayMode": "regular",
-                                                    "width": 480,
-                                                        "height": 830,
-                                                            "symbol": "{{symbol}}",
-                                                                "locale": "en"
-                                }
-                            </script>
-                    </div>
-                </div>
-               
-                <div class="tradingview-widget-container" style="padding: 20px;">
-                    <div id="tradingview_9f0d7"></div>
-                    <div class="tradingview-widget-copyright"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-                    <script type="text/javascript">
-                        new TradingView.widget(
-                            {
-                                "width": 830,
-                                "height": 830,
-                                "symbol": "{{symbol}}",
-                                "interval": "D",
-                                "timezone": "Etc/UTC",
-                                "theme": "dark",
-                                "style": "1",
-                                "locale": "en",
-                                "toolbar_bg": "#f1f3f6",
-                                "enable_publishing": false,
-                                "hide_top_toolbar": true,
-                                "allow_symbol_change": true,
-                                "save_image": false,
-                                "container_id": "tradingview_9f0d7"
-                            }
-                        );
-                    </script>
-                </div>
-                
-            </div-->
+                </script-->
+    
         </div>
         <div
             style="color: black;margin-left:10% ;margin-top: 40px;margin-bottom: 20px;font-weight:  bold;font-size:20px;">
@@ -187,32 +151,6 @@
                                 }
                             </script>
                     </div>
-                </div>
-                <div style="display: inline-block; padding: 10px;">
-                    <!-- TradingView Widget BEGIN -->
-                    <div class="tradingview-widget-container">
-                        <div class="tradingview-widget-container__widget"></div>
-
-                        <script type="text/javascript"
-                            src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
-                            async>
-                                {
-                                    "symbol": "NYSE:FRC",
-                                        "width": 350,
-                                            "height": 220,
-                                                "locale": "en",
-                                                    "dateRange": "12M",
-                                                        "colorTheme": "dark",
-                                                            "trendLineColor": "rgba(41, 98, 255, 1)",
-                                                                "underLineColor": "rgba(41, 98, 255, 0.3)",
-                                                                    "underLineBottomColor": "rgba(41, 98, 255, 0)",
-                                                                        "isTransparent": false,
-                                                                            "autosize": false,
-                                                                                "largeChartUrl": ""
-                                }
-                            </script>
-                    </div>
-                    <!-- TradingView Widget END -->
                 </div>
 
                 <div style="display: inline-block; padding: 10px;">
@@ -403,7 +341,33 @@
              </div>
             
         </div>
+        <div class="containerv"
+            style="margin-left:10% ;margin-right:10%;margin-bottom:30px;margin-top:30px;width: auto;background-color: white;border: 1px solid black;">
+            <div style="height: 100%;width: 60%;">
+            <div style="padding: 20px;">
+                <div style="display: inline;margin-left: 30px;margin-top: 30px;font-weight: bold;font-size: 30px;">Select Market</div>
+            <div style="display: inline;margin-left: 75px;margin-top: 30px;font-weight: bold;font-size: 30px;">Stock Name</div>
+                <form method="POST" >
+                    <div style="display: flex;">
+                    <select name="selectmarket" style="height:50px; width:200px;margin: 30px;  font-size: 30px;">
+                        <option value="NONE">NONE</option>
+                        <option value="THAI">THAI</option>
+                        <option value="US">US</option>
+                    </select>
+                    <input type="text" placeholder="Look up/Company" name="symbol" id="symbol"
+                        style="width: 250px;height:50px;margin: 30px;text-transform: uppercase;font-size: 25px; ">
+                    <input type="submit" value="CHECK"
+                        style="font-size: 30px;height:50px;margin: 30px;"></div>
+                </form>
+            </div>
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+            <div id="chart6"></div>
+                    <script>
+                        var graphJSON6 = {{ graphJSON6| safe }};
+                        Plotly.plot("chart6", graphJSON6.data, graphJSON6.layout);
+                    </script>
         
-</body>
+            </div></div></div>
+        </body>
 
 </html>

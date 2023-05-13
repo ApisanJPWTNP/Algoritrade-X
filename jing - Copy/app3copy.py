@@ -4,7 +4,7 @@ from findindi2 import *
 from checksignal import *
 from checksignal2 import *
 import pandas as pd
-from suggest import *
+# from yeet import*
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go
@@ -52,8 +52,8 @@ graphexwid=450
 graphexheight=300
 colorret="grey"
 colorbh="grey"
-findindisuggest("CPALL.BK")
-sellbuy,result1,purebh1,ret1=checksuggest("CPALL")
+findindis("CPALL.BK")
+sellbuy,result1,purebh1,ret1=check("CPALL")
 fig = px.line(sellbuy, x='Date', y="adj_close_price")
 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['buy'], mode='markers', name="BUY", marker=dict(color='Green', size=12)))
 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['sell'], mode='markers', name="SELL", marker=dict(color='Red', size=12)))
@@ -72,8 +72,8 @@ elif purebh1>0:
     colorbh1="green"
 else:
     colorbh1="grey"
-findindisuggest("ADVANC.BK")
-sellbuy,result2,purebh2,ret2=checksuggest("ADVANC")
+findindis("ADVANC.BK")
+sellbuy,result2,purebh2,ret2=check("ADVANC")
 fig = px.line(sellbuy, x='Date', y="adj_close_price")
 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['buy'], mode='markers', name="BUY", marker=dict(color='Green', size=12)))
 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['sell'], mode='markers', name="SELL", marker=dict(color='Red', size=12)))
@@ -92,8 +92,8 @@ elif purebh2>0:
     colorbh2="green"
 else:
     colorbh2="grey"
-findindisuggest("AOT.BK")
-sellbuy,result3,purebh3,ret3=checksuggest("AOT")
+findindis("AOT.BK")
+sellbuy,result3,purebh3,ret3=check("AOT")
 fig = px.line(sellbuy, x='Date', y="adj_close_price")
 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['buy'], mode='markers', name="BUY", marker=dict(color='Green', size=12)))
 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['sell'], mode='markers', name="SELL", marker=dict(color='Red', size=12)))
@@ -112,8 +112,8 @@ elif purebh3>0:
     colorbh3="green"
 else:
     colorbh3="grey"
-findindisuggest("PTT.BK")
-sellbuy,result4,purebh4,ret4=checksuggest("PTT")
+findindis("PTT.BK")
+sellbuy,result4,purebh4,ret4=check("PTT")
 fig = px.line(sellbuy, x='Date', y="adj_close_price")
 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['buy'], mode='markers', name="BUY", marker=dict(color='Green', size=12)))
 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['sell'], mode='markers', name="SELL", marker=dict(color='Red', size=12)))
@@ -149,7 +149,6 @@ def home():
     return render_template("index.html")
 
 #login
-@app.route('/login', methods=['POST','GET'])
 @app.route('/login', methods=['POST','GET'])
 def login():
     # session['sucess'] = False
@@ -206,13 +205,14 @@ def signup():
 #research
 @app.route('/atssim', methods=['POST','GET'])
 def atssim():
-    if sucees==False:
+    try:
+        session.get('sucess')
+        if session.get('sucess') !=True:
+            return redirect(url_for('login'))
+    except:
         return redirect(url_for('login'))
-    sucess = session.get('sucess')
-    if sucess==False:
-        return redirect(url_for('login'))
-    findindisuggest("SCC.BK")
-    sellbuy,result,purebh,ret=checksuggest("SCC")
+    findindis2("SCC.BK")
+    sellbuy,result,purebh,ret=check2("SCC")
     fig = px.line(sellbuy, x='Date', y="adj_close_price")
     fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['buy'], mode='markers', name="BUY", marker=dict(color='Green', size=12)))
     fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['sell'], mode='markers', name="SELL", marker=dict(color='Red', size=12)))
@@ -253,8 +253,8 @@ def atssim():
             if marketname=="THAI":
                 tickername=str(stockname)+".BK"
                 try:
-                    findindisuggest(tickername)
-                    sellbuy,result,purebh,ret=checksuggest(stockname)
+                    findindis2(tickername)
+                    sellbuy,result,purebh,ret=check2(stockname)
                     fig = px.line(sellbuy, x='Date', y="adj_close_price")
                     fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['buy'], mode='markers', name="BUY", marker=dict(color='Green', size=12)))
                     fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['sell'], mode='markers', name="SELL", marker=dict(color='Red', size=12)))
@@ -290,8 +290,8 @@ def atssim():
                         colorbh="grey"
                     return render_template("Research.html",graphJSON1=graphJSON1,graphJSON2=graphJSON2,graphJSON3=graphJSON3,graphJSON4=graphJSON4,graphJSON5=graphJSON5,marketname=marketname,stockname=stockname,purebh=purebh,result=result,ret=ret,colorret=colorret,colorbh=colorbh,purebh3=purebh3,purebh2=purebh2,purebh1=purebh1,purebh4=purebh4,colorbh4=colorbh4,colorbh3=colorbh3,colorbh2=colorbh2,colorret4=colorret4,colorret3=colorret3,colorret2=colorret2,colorret1=colorret1,ret1=ret1,ret2=ret2,ret3=ret3,ret4=ret4,colorbh1=colorbh1)
             try:
-                findindisuggest(stockname)
-                sellbuy,result,purebh,ret=checksuggest(stockname)
+                findindis2(stockname)
+                sellbuy,result,purebh,ret=check2(stockname)
                 fig = px.line(sellbuy, x='Date', y="adj_close_price")
                 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['buy'], mode='markers', name="BUY", marker=dict(color='Green', size=12)))
                 fig.add_trace(go.Scatter(x=sellbuy['Date'], y=sellbuy['sell'], mode='markers', name="SELL", marker=dict(color='Red', size=12)))
@@ -332,20 +332,26 @@ def atssim():
 #livetrade
 @app.route('/trade', methods=['POST','GET'])
 def trade():
+    try:
+        session.get('sucess')
+        if session.get('sucess') !=True:
+            return redirect(url_for('login'))
+    except:
+        return redirect(url_for('login'))
     findindis("AAPL")
     sellbuy6,result6,purebh6,ret6=check("AAPL")
     fig = px.line(sellbuy6, x='Date', y="adj_close_price")
     fig.update_layout(title={'text': "AAPL",'x':0.5,'xanchor': 'center','yanchor': 'top'},xaxis_title="Date",yaxis_title="Price",font=dict(size=12))
-    # fig.update_layout(width=1400, height=600)
+    fig.update_layout(width=1400, height=600)
     graphJSON6 = plotly.io.to_json(fig)
-    if sucees==False:
-            return redirect(url_for('login'))
-    sucess = session.get('sucess')
-    if sucess==False:
-        return redirect(url_for('login'))
+    # if sucees==False:
+    #         return redirect(url_for('login'))
+    # sucess = session.get('sucess')
+    # if sucess==False:
+    #     return redirect(url_for('login'))
     import findindi
     dfo=findindi.c
-
+   
     masig=[['sma89_signal',"SMA 89","",""],['sma100_signal',"SMA 100","",""],
             ['ma5_10_signal',"MA CROSS 5/10","",""],['ma21_89_signal',"MA CROSS 21/89","",""],
             ['ma25_89_signal',"MA CROSS 25/89","",""],['ma30_50_signal',"MA CROSS 30/50","",""],['ma30_100_signal',"MA CROSS 30/100","",""],
@@ -358,7 +364,7 @@ def trade():
             ['renko_macdzero_signal',"RENKO&MACD",""],['psar_adx_signal',"PSAR&ADX",""],
             ['bb_rsi_signal',"BB&RSI",""],['stoch_adx_signal',"STOCH&ADX",""]]
     volititesig=[["ADX","",""],["ATR","",""]]
-
+    
     desig=["ATS  (DE)",""]
     if request.method == "POST":
         marketname = request.form.get("selectmarket")
@@ -440,7 +446,7 @@ def trade():
                 sellbuy,result,purebh,ret=check(symbol)
                 fig = px.line(sellbuy, x='Date', y="adj_close_price")
                 fig.update_layout(title={'text': symbol,'x':0.5,'xanchor': 'center','yanchor': 'top'},xaxis_title="Date",yaxis_title="Price",font=dict(size=12))
-                # fig.update_layout(width=1400, height=600)
+                fig.update_layout(width=1400, height=600)
                 graphJSON6 = plotly.io.to_json(fig)
                 desig[1]=result
                 ADX=round(get_adx_value()[len(get_adx_value())-1],2)
@@ -501,23 +507,29 @@ def trade():
                         i[2]="HOLD"
                     a+=1
                 return render_template("trade.html",symbol=symbol,masig=masig,tisig=tisig,contisig=contisig,desig=desig,volititesig=volititesig,graphJSON6=graphJSON6)
-        except:
+        except:  
             return render_template("trade.html",symbol=symbol,masig=masig,tisig=tisig,contisig=contisig,desig=desig,volititesig=volititesig,graphJSON6=graphJSON6)
-
+            
     return render_template("trade.html",masig=masig,tisig=tisig,contisig=contisig,desig=desig,volititesig=volititesig,graphJSON6=graphJSON6)
 
 
-
-    #return render_template("trade.html",symbol="TSLA",masig=masig,tisig=tisig,contisig=contisig,desig=desig,volititesig=volititesig,graphJSON6=graphJSON6)sig,contisig=contisig,desig=desig,volititesig=volititesig,graphJSON6=graphJSON6)
+    
+    return render_template("trade.html",symbol="TSLA",masig=masig,tisig=tisig,contisig=contisig,desig=desig,volititesig=volititesig,graphJSON6=graphJSON6)
 
 #portofoliio
 @app.route('/tradee', methods=['POST','GET'])
 def tradee():
-    if sucees==False:
+    try:
+        session.get('sucess')
+        if session.get('sucess') !=True:
+            return redirect(url_for('login'))
+    except:
         return redirect(url_for('login'))
-    sucess = session.get('sucess')
-    if sucess==False:
-        return redirect(url_for('login'))
+    # if sucees==False:
+    #     return redirect(url_for('login'))
+    # sucess = session.get('sucess')
+    # if sucess==False:
+    #     return redirect(url_for('login'))
     ID = session.get('ID')
     buyorder=db.child(ID).child("BUY").get().val()
     sellorder=db.child(ID).child("SELL").get().val()
@@ -685,4 +697,4 @@ def tradee():
         
     return render_template("trade2.html",buyorder=buyorder,sellorder=sellorder,ava=ava,resultList=resultList,resultLista=resultLista,length=length)
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
