@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='dwd3.css')}}">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Lato", sans-serif
+        }
+
+        .w3-bar,
+        h1,
+        button {
+            font-family: "Montserrat", sans-serif
+        }
+
+        .fa-anchor,
+        .fa-coffee {
+            font-size: 200px
+        }
+    </style>
+</head>
+
+<body style="background-color: whitesmoke;">
+    <div class="w3-top">
+        <div class="w3-bar w3-black w3-card w3-left-align w3-large">
+            <a href="{{ url_for('home') }}"><img class="w3-bar-item w3-button w3-padding-large " style="height: 100px;width:auto"
+                src="{{ url_for('static', filename='nsc_logo_dark_theme-PhotoRoom.png-PhotoRoom.png') }}"></a>
+            <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-blue"
+                href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i
+                    class="fa fa-bars"></i></a>
+            <a href="{{ url_for('atssim') }}"
+                class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+                style="height: 100px;width:auto;font-size:40px;align-items: center;">Research</a>
+            <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white"
+                style="height: 100px;width:auto;font-size:40px;align-items: center;">Live Trade</a>
+
+            <a href="{{ url_for('tradee') }}"
+                class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+                style="height: 100px;width:auto;font-size:40px;align-items: center;">Portfolio</a>
+            <a href="{{ url_for('login') }}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+                style="height: 100px;width:auto;font-size:40px;float: right;">Log Out</a>
+        </div>
+    </div>
+    <div style="padding: 40px;background-color: white;margin-left:10% ;margin-right:10% ;">
+    <div id="mini-chart-container" style="overflow: auto; white-space: nowrap;">
+    {% for item in optedlist %}
+        <div style="border-width: 1px;border-style: solid;border-color: black;">
+        <div style="font-size:30px;"> {{item[0]}}</div>
+        <div style="font-size:30px;">{{item[1]}}</div>
+    </div>
+    {% endfor %}
+    
+    
+    </div></div>
+    <div style="padding: 40px;">
+        <div style="color:black;margin-left:10% ;margin-bottom: 20px;font-weight:  bold;font-size:20px;margin-top:5%;">
+            Symbol lookup</div>
+        <div style="background-color: white;margin-left:10% ;margin-right:10% ;height: auto; width: auto;border: 1px solid black;">
+            <div style="padding: 20px;">
+                <div style="display: inline;margin-left: 30px;margin-top: 30px;font-weight: bold;font-size: 30px;">Select Market</div>
+            <div style="display: inline;margin-left: 75px;margin-top: 30px;font-weight: bold;font-size: 30px;">Stock Name</div>
+                <form method="POST" >
+                    <div style="display: flex;">
+                    <select name="selectmarket" style="height:50px; width:200px;margin: 30px;  font-size: 30px;">
+                        <option value="NONE">NONE</option>
+                        <option value="THAI">THAI</option>
+                        <option value="US">US</option>
+                    </select>
+                    <input type="text" placeholder="Look up/Company" name="symbol" id="symbol"
+                        style="width: 250px;height:50px;margin: 30px;text-transform: uppercase;font-size: 25px; ">
+                    <input type="submit" value="CHECK"
+                        style="font-size: 30px;height:50px;margin: 30px;"></div>
+                </form>
+            </div>
+            <!--script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <div id="chart6"></div>
+                <script>
+                    var graphJSON6 = {{ graphJSON6| safe }};
+                    Plotly.plot("chart6", graphJSON6.data, graphJSON6.layout);
+                </script-->
+    
+        </div>
+        <div
+            style="color: black;margin-left:10% ;margin-top: 40px;margin-bottom: 20px;font-weight:  bold;font-size:20px;">
+            Most Traded
+            Stocks</div>
+        <div style="background-color: white;margin-left:10% ;margin-right:10% ;padding:20px;height:auto; width: auto; border: 1px solid black;">
+            <div id="mini-chart-container" style="overflow: auto; white-space: nowrap;">
+                <div style="display: inline-block; padding: 10px;">
+                    <!-- TradingView Widget BEGIN -->
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+
+                        <script type="text/javascript"
+                            src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+                            async>
+                                {
+                                    "symbol": "NASDAQ:TSLA",
+                                        "width": 350,
+                                            "height": 220,
+                                                "locale": "en",
+                                                    "dateRange": "12M",
+                                                        "colorTheme": "dark",
+                                                            "trendLineColor": "rgba(41, 98, 255, 1)",
+                                                                "underLineColor": "rgba(41, 98, 255, 0.3)",
+                                                                    "underLineBottomColor": "rgba(41, 98, 255, 0)",
+                                                                        "isTransparent": false,
+                                                                            "autosize": false,
+                                                                                "largeChartUrl": ""
+                                }
+                            </script>
+                    </div>
+                    <!-- TradingView Widget END -->
+                </div>
+                <div style="display: inline-block; padding: 10px;">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+
+                        <script type="text/javascript"
+                            src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+                            async>
+                                {
+                                    "symbol": "BAC",
+                                        "width": 350,
+                                            "height": 220,
+                                                "locale": "en",
+                                                    "dateRange": "12M",
+                                                        "colorTheme": "dark",
+                                                            "trendLineColor": "rgba(41, 98, 255, 1)",
+                                                                "underLineColor": "rgba(41, 98, 255, 0.3)",
+                                                                    "underLineBottomColor": "rgba(41, 98, 255, 0)",
+                                                                        "isTransparent": false,
+                                                                            "autosize": false,
+                                                                                "largeChartUrl": ""
+                                }
+                            </script>
+                    </div>
+                </div>
+
+                <div style="display: inline-block; padding: 10px;">
+                    <!-- TradingView Widget BEGIN -->
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+
+                        <script type="text/javascript"
+                            src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+                            async>
+                                {
+                                    "symbol": "NYSE:F",
+                                        "width": 350,
+                                            "height": 220,
+                                                "locale": "en",
+                                                    "dateRange": "12M",
+                                                        "colorTheme": "dark",
+                                                            "trendLineColor": "rgba(41, 98, 255, 1)",
+                                                                "underLineColor": "rgba(41, 98, 255, 0.3)",
+                                                                    "underLineBottomColor": "rgba(41, 98, 255, 0)",
+                                                                        "isTransparent": false,
+                                                                            "autosize": false,
+                                                                                "largeChartUrl": ""
+                                }
+                            </script>
+                    </div>
+                    <!-- TradingView Widget END -->
+                </div>
+                <div style="display: inline-block; padding: 10px;">
+                    <!-- TradingView Widget BEGIN -->
+                    <!-- TradingView Widget BEGIN -->
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+
+                        <script type="text/javascript"
+                            src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+                            async>
+                                {
+                                    "symbol": "NASDAQ:AMD",
+                                        "width": 350,
+                                            "height": 220,
+                                                "locale": "en",
+                                                    "dateRange": "12M",
+                                                        "colorTheme": "dark",
+                                                            "trendLineColor": "rgba(41, 98, 255, 1)",
+                                                                "underLineColor": "rgba(41, 98, 255, 0.3)",
+                                                                    "underLineBottomColor": "rgba(41, 98, 255, 0)",
+                                                                        "isTransparent": false,
+                                                                            "autosize": false,
+                                                                                "largeChartUrl": ""
+                                }
+                            </script>
+                    </div>
+                    <!-- TradingView Widget END -->
+                </div>
+                <div style="display: inline-block; padding: 10px;">
+                    <!-- TradingView Widget BEGIN -->
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+
+                        <script type="text/javascript"
+                            src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+                            async>
+                                {
+                                    "symbol": "NASDAQ:AAPL",
+                                        "width": 350,
+                                            "height": 220,
+                                                "locale": "en",
+                                                    "dateRange": "12M",
+                                                        "colorTheme": "dark",
+                                                            "trendLineColor": "rgba(41, 98, 255, 1)",
+                                                                "underLineColor": "rgba(41, 98, 255, 0.3)",
+                                                                    "underLineBottomColor": "rgba(41, 98, 255, 0)",
+                                                                        "isTransparent": false,
+                                                                            "autosize": false,
+                                                                                "largeChartUrl": ""
+                                }
+                            </script>
+                    </div>
+                    <!-- TradingView Widget END -->
+                </div>
+
+            </div>
+        </div>
+        <div class="containerv"
+            style="margin-left:10% ;margin-right:10%;margin-bottom:30px;margin-top:30px;width: auto;background-color: white;border: 1px solid black;">
+
+            <div style="width: 100%;height: fit-content;display: flex;gap: 20px;padding: 20px;">
+                
+              
+               <div style="height: 100%;width: 33%;">
+                    <div style="font-size: 20px;font-weight: bold;margin-bottom: 10px;">Moving Average</div>
+                   <div class="box" style="height: 100%;width: 100%;padding: 20px;">
+                       <div style="margin-bottom: 10px;">
+                        <div style="font-size: 15px;font-weight: bold;width: 170px;display: inline-block;">Name</div>
+                        <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 80px;"> Action</div>
+                        <div style="font-size: 15px;font-weight: bold;display: inline-block;"> Value</div>
+                       </div>
+                       <hr style="background-color: black;height: 2px;">
+                       {% for item in masig %}
+   
+                       <div style="font-size: 15px;font-weight: bold;width: 170px;display: inline-block;">{{ item[1]}}
+                    </div>
+                    <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 80px;"> {{ item[2]}}</div>
+                    <div style="font-size: 15px;font-weight: bold;display: inline-block;"> {{ item[3]}}</div>
+                       <br>
+                       {% endfor %}
+                   </div></div>
+                <div style="height: 100%;width: 33%;">
+                    <div style="font-size: 20px;font-weight: bold;margin-bottom: 10px;">Technical Indicators</div>
+                   <div class="box" style="height: 100%;width: 100%;padding: 20px;">
+                       <div style="margin-bottom: 10px;">
+                           <div style="font-size: 15px;font-weight: bold;width: 170px;display: inline-block;">Name</div>
+                           <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 80px;"> Action</div>
+                           <div style="font-size: 15px;font-weight: bold;display: inline-block;"> Value</div>
+                       </div>
+                       <hr style="background-color: black;height: 2px;">
+                       {% for item in tisig %}
+   
+                       <div style="font-size: 15px;font-weight: bold;width: 170px;display: inline-block;">{{ item[1]}}
+                       </div>
+                       <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 80px;"> {{ item[2]}}</div>
+                       <div style="font-size: 15px;font-weight: bold;display: inline-block;"> {{ item[3]}}</div>
+                       <br>
+                       {% endfor %}
+                   </div></div>
+                   <div style="height: 100%;width: 33%;">
+                    <div style="font-size: 20px;font-weight: bold;margin-bottom: 10px;">Volatility</div>
+                   <div class="box" style="height: 100%;width: 100%;padding: 20px;">
+                       <div style="margin-bottom: 10px;">
+                           <div style="font-size: 15px;font-weight: bold;width: 100px;display: inline-block;">Name</div>
+                           <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 130px;"> Action</div>
+                           <div style="font-size: 15px;font-weight: bold;display: inline-block;"> Value</div>
+                       </div>
+                       <hr style="background-color: black;height: 2px;">
+                       {% for item in volititesig %}
+   
+                       <div style="font-size: 15px;font-weight: bold;width: 100px;display: inline-block;">{{ item[0]}}
+                       </div>
+                       <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 130px;"> {{ item[2]}}</div>
+                       <div style="font-size: 15px;font-weight: bold;display: inline-block;"> {{ item[1]}}</div>
+                       <br>
+                       {% endfor %}
+                   </div></div>
+                   
+            </div>
+            <div style="width: 100%;height: fit-content;display: flex;gap: 20px;padding: 20px;">
+                
+              
+                <div style="height: 100%;width: 33%;">
+                     <div style="font-size: 20px;font-weight: bold;margin-bottom: 10px;">Conbined Signal</div>
+                    <div class="box" style="height: 100%;width: 100%;padding: 20px;">
+                        <div style="margin-bottom: 10px;">
+                         <div style="font-size: 15px;font-weight: bold;width: 170px;display: inline-block;">Name</div>
+                         <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 80px;"> Action</div>
+                     
+                        </div>
+                        <hr style="background-color: black;height: 2px;">
+                        {% for item in contisig %}
+    
+                        <div style="font-size: 15px;font-weight: bold;width: 170px;display: inline-block;">{{ item[1]}}
+                     </div>
+                     <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 80px;"> {{ item[2]}}</div>
+
+                        <br>
+                        {% endfor %}
+                    </div></div>
+                 <div style="height: 100%;width: 33%;">
+                     <div style="font-size: 20px;font-weight: bold;margin-bottom: 10px;">ATS (DE)</div>
+                    <div class="box" style="height: 100%;width: 100%;padding: 20px;">
+                        <div style="margin-bottom: 10px;">
+                            <div style="font-size: 15px;font-weight: bold;width: 170px;display: inline-block;">Name</div>
+                            <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 80px;"> Action</div>
+            
+                        </div>
+                        <hr style="background-color: black;height: 2px;">
+                       
+    
+                        <div style="font-size: 15px;font-weight: bold;width: 170px;display: inline-block;">{{ desig[0]}}
+                        </div>
+                        <div style="font-size: 15px;font-weight: bold;display: inline-block;width: 80px;"> {{ desig[1]}}</div>
+                       
+                        <br>
+                 
+                    </div></div>
+                    
+                    
+             </div>
+            
+        </div>
+        <div class="containerv"
+            style="margin-left:10% ;margin-right:10%;margin-bottom:30px;margin-top:30px;width: auto;background-color: white;border: 1px solid black;">
+            <div style="height: 100%;width: 60%;">
+            <div style="padding: 20px;">
+                <div style="display: inline;margin-left: 30px;margin-top: 30px;font-weight: bold;font-size: 30px;">Select Market</div>
+            <div style="display: inline;margin-left: 75px;margin-top: 30px;font-weight: bold;font-size: 30px;">Stock Name</div>
+                <form method="POST" >
+                    <div style="display: flex;">
+                    <select name="selectmarket" style="height:50px; width:200px;margin: 30px;  font-size: 30px;">
+                        <option value="NONE">NONE</option>
+                        <option value="THAI">THAI</option>
+                        <option value="US">US</option>
+                    </select>
+                    <input type="text" placeholder="Look up/Company" name="symbol" id="symbol"
+                        style="width: 250px;height:50px;margin: 30px;text-transform: uppercase;font-size: 25px; ">
+                    <input type="submit" value="CHECK"
+                        style="font-size: 30px;height:50px;margin: 30px;"></div>
+                </form>
+            </div>
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+            <div id="chart6"></div>
+                    <script>
+                        var graphJSON6 = {{ graphJSON6| safe }};
+                        Plotly.plot("chart6", graphJSON6.data, graphJSON6.layout);
+                    </script>
+        
+            </div></div></div>
+        </body>
+
+</html>
