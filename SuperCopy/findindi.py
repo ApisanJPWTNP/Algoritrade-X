@@ -1,5 +1,8 @@
+# calculate each individual indicator
+
 import pandas as pd
 class PSAR:
+  
 
   def __init__(self, init_af=0.02, max_af=0.2, af_step=0.02):
     self.max_af = max_af

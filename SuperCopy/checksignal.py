@@ -1,3 +1,5 @@
+# calculate the output of the automated system
+
 def check(Name):
     import pyrebase
     firebaseConfig = {

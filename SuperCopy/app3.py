@@ -6,7 +6,7 @@ import pandas as pd
 import plotly
 import plotly.express as px
 import plotly.graph_objects as go
-import pyrebase
+from pyrebase import pyrebase
 app= Flask(__name__)
 firebaseConfig = {
   'apiKey': "AIzaSyB0KAUat7kWBa9YmY7_5Q090MtIHfVZgp8",
@@ -148,9 +148,8 @@ def home():
 
 #login
 @app.route('/login', methods=['POST','GET'])
-@app.route('/login', methods=['POST','GET'])
 def login():
-    # session['sucess'] = False
+
     global sucees
     sucees =False
     if request.method == "POST":
@@ -159,13 +158,11 @@ def login():
         try:
             user = auth.sign_in_with_email_and_password(user, password)
             sucees =True
-            # User is authenticated
             app.secret_key =user['localId']
             session['ID'] = user['localId']
             session['sucess'] = True
             return redirect(url_for('atssim'))
         except :
-            # Authentication failed
             sucess=False
             return render_template("loginnew.html",statuslogin="user not found or password is not correct")
     return render_template("loginnew.html")
@@ -193,7 +190,7 @@ def signup():
                     db.child(userid['localId']).child("Email").set(userid)
                     db.child(userid['localId']).child("Password").set(passwordsign)
                     db.child(userid['localId']).child("MONEY").set(10000000)
-                    statussignup='SUCESS'   
+                    statussignup='SUCCESS'   
                     return render_template('signupnew.html',statussignup=statussignup)
                 else:
                     statussignup="Password not match"
